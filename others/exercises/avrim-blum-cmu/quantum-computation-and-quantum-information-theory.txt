@@ -1,0 +1,556 @@
+	Quantum Computation and Quantum Information Theory
+		(Guest lecture: Avrim Blum)
+
+Classical Algorithms (15-451 in 1-2 days, with focus on number theory)
+- arithmetic
+- number theoretic algorithms
+- primality testing
+- RSA
+	Reading: appendix 2,4,5 of N&C.  Or, Chapter 31 of CLRS.
+===========================================================================
+
+Today & next time: classical algs for arithmetic, number-theoretic problems.  
+Lead to RSA.  Motivate Shor's alg + provide some tools you will need for it.
+
+The very basics
+===============
+
+First of all, when we talk about the speed of an algorithm, we'll be
+asking ourselves "how does the running time *scale* with the size of
+the input"?
+
+For example, think of adding two n-bit numbers in the usual way.
+Depending on your computer, you might be able to do 1 bit per time
+step, or 8 bits at a time, or 32 bits at a time, and the amount of
+time *per* operation will differ, but the running time will
+nonetheless be *linear* in the size of the input.
+
+If T(n) is the running time on an input of size n, and f(n) is some
+function, then we say T(n) is O(f(n)) if exists constant c such that 
+T(n) <= c*f(n) for all but finitely many n.   So, we can do addition in
+time O(n).  
+
+[Also corresponding notation: T(n) is Omega(f(n)) if T(n) >= c*f(n)
+for some positive c, for all but finitely many n.  T(n) is Theta(f(n))
+if T(n) is O(f(n)) and T(n) is Omega(f(n)) ]
+
+
+More number problems
+====================
+
+- Multiplying two n-bit numbers
+
+        Say we want to multiply two n-bit numbers. 41 x 42
+	(101001 x 101010).  The definition of "times" is that we're
+	looking for the result of adding 41 to itself 42 times (or vice
+	versa).  You could imagine doing it that way, and it would be
+	correct but not particularly efficient: about 2^n additions.
+
+	What's a better way? A better way is to do what we learned in school: 
+		1010010
+	      101001
+            101001
+            -----------
+            11010111010 = 1722
+
+        Running time here is O(n^2).   Turns out there's a simple
+        divide-and-conquer method called Karatsuba multiplication that takes
+        time O(n^{log_2(3)}).  If there's time at the end, I can tell
+	you how that works.  Can use FFT to get O(n log n loglog n).
+
+
+- Taking A mod B.   Again, can do in time O(n^2) using grade-school method.
+
+	Note: I'm using "A mod B" to mean the remainder when you
+        divide A by B: the smallest nonnegative of form A-kB for integer k.
+
+At this point, let's treat +, *, mod as basic operations.
+
+- exponentiation.  Say we want to compute A^B mod N, where A,B,N are
+  all n-bit numbers.   This is a plausible thing to ask for, since the
+  answer will be at most n bits long.  One way is to multiply A by
+  itself B times, but that will take exponential time, even ignoring the
+  time to multiply.   What is a faster way?
+
+  Can use repeated squaring.  Let X=1.  Walk left-to-right down the
+  bits of B.  Each time we see a 1, do X = (X^2)*A.  Each time you see a
+  0, just do X = X^2.  (And then mod by N).  Notice that at each step
+  we have A^B' mod N where B' is number corresponding to the part of B
+  we've read so far.    E.g., A^{10011}.
+
+
+- GCD(A,B):  GCD(A,B) is the largest d such that A and B are both
+  multiples of d.  gcd(A,0)=A.    
+
+  Can we compute GCD(A,B) quickly?  Notice that the number of bits in
+  the input is log(A)+log(B) so we want to have a good dependence on
+  that.  Classic algorithm over 2000 years old called Euclid's alg.
+  Based on observation that GCD(A,B) = GCD(B, A mod B).
+  (Proof: if A and B are multiples of d, so A = A'*d and B = B'*d,
+  then A-kB = d(A' - kB') is a multiple of d too. Similarly, if d
+  divides B and (A mod B) then d divides A.)
+
+  So, this is the algorithm:
+		GCD(A,B) 
+		  if (B==0) return A
+		  else return GCD (B, A mod B)
+
+  E.g., GCD(51, 9) = GCD(9,6) = GCD(6,3) = GCD(3,0) = 3.
+
+  Can anyone see quick argument that the number of iterations is
+  linear in the number of bits in the input?  One way to see this is
+  that if A>=B then "A mod B" is guaranteed to have at least one fewer
+  bit than A. In particular, if B has fewer bits than A then this is
+  easy, and if A and B have the same number of bits, then doing A-B gets
+  rid of the leading 1, so again it is true.
+
+
+- Extended GCD: also compute integers x and y such that d = Ax + By.
+	        For example, A=7, B=9.  d=1.  1=4*7-3*9, so x=4, y=-3.
+
+  How to do it: can compute with same algorithm.  Recursively, running
+  on B and A-kB, we compute x', y',d such that d = Bx' + (A-kB)y'.
+  This means that d = Ay' + B(x'-ky').  This seems like a curiosity
+  but it turns out to be really useful.
+
+
+Modular Arithmetic:
+==================
+
+Z_N = {0,1,2,...,N-1}
+Z_N^* = {A in Z_N : gcd(A,N) = 1}.  If N is prime, then Z_N^* = {1,2,...,N-1}
+Z_N^* is a group under multiplication: if you multiply two numbers
+relatively prime to N, you get another number relatively prime to N.
+(If N doesn't share any factors with either one, then it doesn't share
+any factors with their product).
+Also, each A in Z_N^* has an inverse: a number B such that AB = 1 mod N.
+
+Question: why do inverses exist, and how can we compute them quickly?
+E.g., what is 5^{-1} mod 17?
+
+Here's how: compute extended GCD of N and A.  Get x,y such that Nx+Ay=1.
+So, Ay = 1 mod N: y is the inverse of A.
+
+============================================================================
+
+HARD AND EASY PROBLEMS: A common "first cut" is to talk about
+algorithms as being efficient if they run in polynomial time.
+Polynomial time means our running time is O(n^c) for some constant c,
+where n is the size of the input.  So, all of the above algorithms are
+efficient in this sense.  This is nice because allows us to compose
+things: e.g., counting time in terms of basic operations that
+themselves are efficient.
+
+An example of something with no known (non-quantum) polynomial time
+algorithm is factoring.  Given number N, find a number d (1 < d < N)
+that divides N if one exists.
+
+Note: goal is polynomial time in n = lg(N).  I.e., in the number of
+bits it takes to write down the input.  Trial division takes time
+sqrt(N) = 2^{n/2}.  Quadratic sieve alg is roughly 2^{sqrt(n log n)}.
+Number-field sieve is 2^{O(n^{1/3}(log n)^{2/3})}.  Largest RSA
+challenge number factored as of last time I checked is 512
+bits (155 digits).
+
+Factoring has received a lot of interest because the assumption that
+it is hard is an integral component of many (non-quantum) systems for
+cryptography.  In particular, RSA.  
+
+Before getting to RSA, here is something a little peculiar.  Even
+though *factoring* seems hard, just testing whether or not a number is
+factorable (i.e., composite versus prime) is easy.  RSA relies on
+this, since the 1st step is to pick two large primes and multiply them
+together.  So, let's see how to do primality testing.
+
+
+Basic number theory
+===================
+
+Definition:  order(a) = smallest t such that a^t = 1 (mod N). 
+
+Definition:  Euler phi function:  phi(N) = |Z_N^*|.
+
+E.g., if p is prime, then phi(p) = p-1.
+
+If N=p*q, what is phi(N)?  phi(N) = (p-1)(q-1).  Can see this by
+listing the numbers {1,...,N} and then removing the q multiples of p,
+then removing the p multiples of q, and then realizing that we removed
+N twice.
+
+Theorem: for all a in Z_N^*. order(a) divides phi(N).
+
+  Proof: 
+
+  Part 1: Note that {1, a, a^2, ..., a^{t-1}} is a subgroup of Z_N^*:
+  it's closed under multiplication and inverses.
+
+  Part 2: Now we can use (and prove) a basic fact from group theory
+  that THE SIZE OF ANY SUBGROUP DIVIDES THE SIZE OF THE GROUP.  
+
+        Proof: Say H is a subgroup of G and y is not in H. Then the coset
+        yH = {yh : h in H} is a set of size |H| (if y*h1 = y*h2 then
+        h1 = h2) and is disjoint from H (if y*h1 = h2 then y =
+        h2*h1^{-1}, which is in H by H's group closure properties).
+        Furthermore, all cosets are disjoint (if z*h1 = y*h2 then z =
+        y*h3 for some h3 in H).
+
+Corollary: Euler's Theorem: for any a in Z_N^*, a^{phi(N)} = 1 (mod N).
+
+  Proof: if t is the order of a, then phi(N) = b*t for some b, and
+  a^{phi(N)} = (a^t)^b = 1 (mod N). 
+
+Corollary: Fermat's little theorem: For prime p, and a in Z_p^*,
+	   a^{p-1} = 1 mod p. 
+
+
+PRIMALITY TESTING: 
+
+Fermat's little theorem gives us a nice way to prove that a number N
+is not prime without necessarily having *any* idea how to factor it:
+just pick some a < N and compute a^{N-1} mod N.  Remember, we can do
+this quickly even though N is a huge number.  If the result is not 1,
+then we *know* N is composite!
+
+So, this is a nice easy certificate of compositeness.  Of course if
+a^{N-1} = 1 mod N, that doesn't guarantee that N is prime.  So we need
+more work to turn this into a real primality test.
+
+But, here's an interesting thing.  The set S = {a in Z_N^*: a^{N-1} = 1}
+is a group.  Closed under multiplication: 
+        If a in S, b in S, ab in S because (ab)^{N-1} = a^{N-1}*b^{N-1} = 1
+and closed under inverses:
+        If a in S, ab = 1 mod N, then (ab)^{N-1} = 1, so b^{N-1} = 1.
+
+This means that if there is even a single number a in Z_N^* such that
+a^{N-1} != 1 mod N, then AT LEAST HALF of the a's have this property
+since the size of a subgroup divides the size of the group.
+
+It turns out there *are* composites where *all* a in Z_N^* have
+a^{N-1} = 1 mod N.  These are called Carmichael numbers.  Smallest is
+561. But, it turns out that (a) they're rare, and (b) they're actually
+easy to factor.  Don't have time to describe factoring alg for
+Carmichael's right now, but given that, we now have a fast
+*randomized* algorithm for primality testing:
+
+ - pick k random a's between 1 and N-1.
+ - test that their GCD with N is 1.  (If not, we have a factor).
+ - if any have a^{N-1} != 1 mod N, return COMPOSITE
+ - else return "PRIME (I THINK)"
+
+If N is composite and not Carmichael, what's the chance we don't
+catch it?  Ans: 1/2^k.
+If N is prime, what's the chance we output the wrong thing?  Ans: 0.
+So if you pick k=100, chance of failure is at most 1/2^100.  At k=300
+this is like 1/(# atoms in universe).
+
+When you combine this with alg for factoring Carmichael numbers, you
+get the Miller-Rabin primality testing algorithm.  Recently, a
+deterministic 0-error algorithm was given too.
+
+
+RSA PUBLIC-KEY CRYPTOGRAPHY
+===========================
+
+RSA is an answer to the question of "how can two people communicate
+securely if they have never met to exchange secret keys before?".
+Answer is to somehow separate encryption and decryption.  Each person
+has a public encryption key that's published in the phone book, and
+then their own private decryption key that's kept secret.  To send a
+msg to A, you look them up in the phone book and use their public key.
+The point about this public-key cryptography is that just because you
+can encrypt a message to A doesn't mean you can decrypt anyone else's
+msgs sent to A.
+
+
+RSA:
+Person A (Alice) subscribes by
+(1) picking two large primes p and q (say 100 decimal digits long) and
+        computing N = p*q.  
+(2) Picking a small odd number e relatively prime to (p-1)*(q-1). E.g., e=3. 
+(3) Computing d = e^{-1} mod phi(N) = (p-1)*(q-1).
+(4) Publishing the pair (e,N) as her PUBLIC KEY in a global phone
+        book, and keeping the pair (d,N) secret as her SECRET KEY.  
+        The primes p and q can now be thrown away.
+
+If person B (Bob) wants to send a message M to Alice, what he does is
+compute x = M^e mod N, and sends x along.
+
+(5) To decrypt, Alice computes x^d mod N, which is M.
+
+[Various issues I'm ignoring.  E.g., might want to prepend some
+garbage onto M so that evesdropper can't guess-and-check]
+
+Let's now look at details of how/why all this works.
+=============================================================
+
+STEP 1: a reasonable proportion of random numbers are prime.  So can
+just pick random numbers and test, until we get two primes.
+
+STEP 3:  just requires computing inverse which we know how to do.
+
+STEP (5): Why do we get back M?
+
+   Answer is that this comes from Euler's theorem.  
+   x^d = M^{de} mod N.  By definition, de = 1 + k*phi(N).  So,
+   M^{1 + k*phi(N)} = M*M^{phi(N)^k} = M*1^k = M (mod N).
+
+   Also: use fast exponentiation here since d might be a large number.
+
+======================================================================
+
+Why might we expect RSA to be secure?  Here is one fact: given N and
+e, finding the decryption key d is as hard as factoring.  (Though this
+doesn't say there might not be some other way of decrypting a message
+that people haven't thought of).
+
+
+
+	Quantum Computation and Quantum Information Theory
+		(Guest lecture: Avrim Blum)
+
+* Finish discussion of number-theoretic algorithms
+ - on security of RSA
+ - preliminaries for Shor
+* Complexity Theory
+===========================================================================
+Number-theoretic algorithms recap:
+
+Important theorems:
+- Fermat's little theorem: a^{p-1} = 1 mod p, for prime p,
+   which is a special case of:
+- Euler's theorem: a^phi(N)= 1 mod N.  Remember, phi(N) = |Z_N^*|
+   which is a special case of:
+- Theorem: for all a in Z_N^*. order(a) divides phi(N).
+   which we proved by showing:
+- Theorem: for any group G, subgroup H of G, |H| divides |G|.
+
+Important algorithms:
+- Randomized primality testing. Idea: pick some a<N and take a^{N-1} mod N.
+  (Remember, we can do this quickly using fast exponentiation.) If you
+  don't get 1, then you know that N is not prime.  Unfortunately, there
+  are some composites, called Carmichael numbers, where ALL a in Z_N^*
+  have a^{N-1} = 1 mod N.  However, these are rare and easy to
+  factor (won't explain how to factor here).  For the rest, though, 
+  we showed that *AT LEAST HALF* of the a in Z_N^* will have a^{N-1}
+  not equal to 1 mod N.  Did this by proving that the set of "bad" a's
+  was a subgroup of Z_N^*.  So, by picking random values a and trying
+  them, we have a fast randomized algorithm for primality testing.
+
+- RSA: A public-key cryptosystem based on assumption that factoring is
+  hard.  Recap:
+
+  Person A (Alice) subscribes by
+  (1) picking two large primes p and q (say 100 decimal digits long) and
+        computing N = p*q.  Note: phi(N) = (p-1)*(q-1).
+  (2) Picking a small odd number e relatively prime to phi(N). E.g., e=3. 
+  (3) Computing d = e^{-1} mod phi(N) = (p-1)*(q-1).
+  (4) Publishing the pair (e,N) as her PUBLIC KEY in a global phone
+        book, and keeping the pair (d,N) secret as her SECRET KEY.  
+        The primes p and q can now be thrown away.
+
+  If person B (Bob) wants to send a message M to Alice, what he does is
+  compute x = M^e mod N, and sends x along.
+
+  (5) To decrypt, Alice computes x^d mod N, which is M.
+======================================================================
+
+Why might we expect RSA to be secure?  Here is one fact: given N and
+e, finding the decryption key d is as hard as factoring.  (NOTE: this
+DOESN'T mean there might not be some other way of decrypting a message
+that people haven't thought of.  So you can't truly say that breaking
+RSA is necessarily as hard as factoring.)
+
+This is actually a special case of a more general fact: if we have a
+way that given A we can find B>0 such that A^B = 1 mod N, we can use this to
+factor. Shor's algorithm, given A, will find B=order(A) and then plug
+into this general fact to factor.  For RSA, if you find d, then we can
+use to compute de-1, which is a multiple of phi(N), so that works too.
+
+Proof sketch: 
+    1. Pick A at random and feed into black-box to get B s.t. A^B = 1 mod N. 
+    2. While (B is even and A^{B/2} = 1 mod N) do: B = B/2.
+    3. If B is odd or B is even and A^{B/2} = -1 mod N, go back to 1. 
+    4. Let z = A^{B/2}.  GCD(z+1,N) will give a factor of N.
+
+The part I won't prove: there's at least a 50/50 chance, for random A,
+that we will get to step 4.  This uses the fact that you can prove
+there must be *some* good A, and also you can prove the bad A's (the
+ones that don't get you to step 4) form a subgroup.
+
+The part I WILL prove: why does getting to step 4 give us a factor?
+Notice that z^2 = 1 mod N. This means (z-1)(z+1) = 0 mod N. So,
+(z-1)(z+1) is a multiple of N.  But, z+1 isn't a multiple of N
+(since z != -1 mod N) and z-1 isn't a multiple of N either (since
+z != 1 mod N).  So, some part of N divides z-1 and some part
+divides z+1, and taking GCD of either one with N will give us a
+nontrivial factor (a factor besides 1 and N).
+=====================================================================
+
+Complexity Theory
+=================
+Complexity theory is the study of the inherent computational
+difficulty of problems, and what sorts of problems can be solved given
+different amounts of resources.
+
+E.g., what problems can (or cannot) be solved in deterministic
+polynomial time?  What can be solved in randomized polynomial time?
+What can be solved in polynomial space (but possibly exponential
+time)?  How do these sets of problems relate to each other?
+
+A little formality:  What do we mean by a "problem" anyway?  To be
+precise (and to follow standard practice here) we will focus on
+DECISION PROBLEMS.  I.e., "yes/no problems". 
+
+E.g., 
+- given two numbers A and B, are they relatively prime? (easy)
+- given a number N, is it composite? (easy w/ randomization)
+- given numbers N,k, does N have a factor between 2 and k?
+
+Can anyone see why the 3rd one above is poly-time equivalent to
+factoring?  (i.e., given a black box to solve it, you can factor, and
+vice-versa)
+
+Formally, a "problem" specifies the set of inputs whose answer is
+"yes".  Sometimes this is called a "language".
+
+P = set of problems that can be solved in deterministic polynomial-time.
+
+RP = set of problems that can be solved by polynomial-time randomized
+  algorithms with one-sided error.  Specifically, think of a randomized
+  algorithm as a deterministic polynomial-time algorithm with two inputs
+  x and y.  x = instance, y = random string.  y is required to be of
+  polynomial length.  Then we say:
+
+  Language L is in RP if there exists a poly time A such that:
+        For all x in L, Pr_y[A(x,y) = 1] >= 1/2.
+        For all x not in L, Pr_y[A(x,y) = 1] = 0.
+
+  E.g., our test for compositeness.  (You can then repeat to reduce error)
+
+BPP = 2-sided error:
+      For all x in L, Pr_y[A(x,y) = 1] > 3/4.
+      For all x not in L, Pr_y[A(x,y) = 1] < 1/4.
+
+(You can then repeat and take majority vote to reduce error)
+
+NP = set of problems such that yes-instances have short proofs.
+      For all x in L, there EXISTS y such that A(x,y) = 1.
+      For all x not in L, for ALL y, A(x,y) = 0.
+
+E.g., the Traveling Salesman problem (TSP) "given a map (graph) with
+distances, is it possible to visit all the cities and return while
+traveling distance at most k?"  It might be hard to find such a
+solution, but if someone handed a tour to you, you could easily check
+that indeed it satisfied the desired condition (it visits all the
+cities and has total length <= k). The algorithm A is just the simple
+procedure that checks whether a proposed solution is correct. (These
+are often called "witnesses").
+
+E.g., Factoring is in NP.  Think of a very simple algorithm A that
+just tests if y divides N and if y is in [2,k].  Factoring is also in
+"Co-NP" but let's not get into that....
+
+A canonical NP problem is "Given a circuit C (this is a classical
+circuit, with AND and NOT gates, say), does there exist an input y
+such that C(y) = 1?"  This problem is in NP because we can define a
+simple algorithm A that takes input (C,y) and then just runs C on y.
+This problem is termed "NP-COMPLETE" because if you could solve this,
+you could solve ANY problem in NP.  In essence, the argument is just
+that given instance x, we compile the circuit C(y) = A(x,y) and feed
+it into our solver.  This problem is called "Circuit-SAT".  The
+TSP is also NP-complete, and there are lots of NP-complete problems
+known.  Note: Factoring is NOT believed to be NP-complete.
+
+Note on Circuit-SAT: that if C has n inputs, then we can solve using
+brute-force search in time 2^n.  Grover's algorithm takes time 2^{n/2}.
+
+No-one knows if there is a polynomial-time algorithm: this is the 
+"P vs NP" question.
+
+SOME MORE INTERESTING COMPLEXITY CLASSES
+========================================
+P^{NP} = what you can do in polynomial-time given access to an oracle
+ for solving circuit-SAT. (You just pay 1 unit for each oracle call).
+
+P^{#P} = what you can do in polynomial-time given access to an oracle
+ for the problem "Given a circuit C, HOW MANY inputs y have C(y)=1?"  
+ A useful way of thinking of this is: what exactly is the probability
+ C(y)=1 given a random input y?
+
+PSPACE = what you can do in polynomial work-space (but possibly
+ exponential time).
+
+PSPACE contains P^{#P} because we can implement the oracle by just
+running the circuit on each of the 2^n different inputs one at a time,
+and incrementing a counter every time we get an output of 1.  This
+takes a long time, but not a lot of work-space.
+
+Canonical PSPACE-complete problem: Does the first player have a
+ winning strategy in game X (where X is a sufficiently interesting
+ game, so long as you ensure the length of the game is polynomial).
+ E.g., "generalized geography".  You want to know "does there exist a
+ move for me such that for all moves for my opponent, there exists a
+ move for me, etc., so that I win.  In polynomial space you can do the
+ game-tree search, propagating back the values.
+
+ In particular, to calculate if state s is a win for me, we just
+ consider each possible move for me, and recursively calculate whether
+ the resulting state is a win or tie for my opponent.  If there exists
+ a move for me such that the recursive answer is "no", then s *is* a
+ winning state for me.  Amount of space used is just proportional to
+ the *depth* of the recursion (the length of the game) since we just
+ need to remember the path we came from. This is true even if there
+ may be exponentially many game states.
+
+It's not even known if P = PSPACE!
+==============================================================
+
+[probably no time left for this...]
+
+How do these relate to what can be done in polynomial-time by a
+quantum computer?  Quantum class is called "BQP".  We'll assume we are
+trying to solve a decision problem.  Quantum algorithm starts in state
+|0000> and then does a series of unitary transformations.  At the end,
+we measure a specified qubit (say the first one) and output "yes" if
+we see a 1, and "no" if we see a 0.  We want to get the correct answer
+with probability at least 3/4 (just like as in BPP).  
+
+Actually, we will want to ensure that the only two ending states are
+|10...0> and |00...0>.  We can do that by copying (XORing) the answer
+bit into a special new position, and then undoing all of our previous
+computaiton to get the remaining bits back to 0.
+
+
+Claim 1:  BQP is contained in PSPACE.
+(NOTE: in particular, this means nobody can prove if BQP is more
+powerful than P)
+
+Claim 2:  BQP is contained in P^{#P}.
+
+
+Proof of Claim 1: The idea is to use the analogy of game-tree search.
+A quantum computation is a series of unitary transformations U_1, U_2,
+U_3,.... A given U_t takes each basis state i to some superposition of
+states j.  Let's call the amplitudes u_{i,j,t}.  Informally, u_{i,j,t} is
+the amplitude on state j at time t+1 if we are in state i at time t.
+[or more formally, the amplitude on state j at time t+1 is the sum,
+over all states i, of the amplitude on state i at time t times u_{i,j,t}].
+
+We can now do the calculation as follows, basically just adding up
+amplitudes on all computation paths of the quantum circuit:
+
+// calculate amplitude at accept states if start in state i at time t.
+// an "accept" state is just a state whose first bit is 1.
+Calculate_amplitude(state i, time t)
+  if t = t_final:
+	if i is an accept state return 1.
+	else return 0.
+  else:
+	result = 0;
+	for each j such that u_{i,j,t} is not 0,
+	  result = result + u_{i,j,t}*Calculate_amplitude(j,t+1)
+
+
+
+Proof of Claim 2:  It's interesting, but we're lucky if there was time
+even for the above proof of claim 1...
