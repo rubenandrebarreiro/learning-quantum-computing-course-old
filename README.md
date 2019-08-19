@@ -5,6 +5,6 @@
 
 #### "Being or not being?! That's the tricky question!" ⁉️ 🧐
 
-I sincerely hope you enjoy it,
+I sincerely, hope you enjoy it,
 <br>
 **_Rúben André Barreiro_**.
