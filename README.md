@@ -33,7 +33,7 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
 * [https://bitbucket.org/rubenandrebarreiro/](https://bitbucket.org/rubenandrebarreiro/)
 
 
-#### "Being or not being?! That's the tricky question!" ⁉️ 🧐
+#### "Being or not being?! That's the tricky question!!!" ⁉️ 🧐
 
 I sincerely, hope you enjoy it,
 <br>
