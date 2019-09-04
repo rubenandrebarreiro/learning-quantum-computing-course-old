@@ -43,6 +43,19 @@
 A project based in **_Quantum Computing_**. This project was built using **_[IBM Q Experience](https://quantum-computing.ibm.com/)/[QisKit](https://qiskit.org/) ([Jupyter Notebook](https://jupyter.org/)/[Python](https://www.python.org/) Environment Framework from [IBM](https://ibm.com/))_**, [**_Q#_**](https://docs.microsoft.com/en-us/quantum/?view=qsharp-preview) **_([Q Sharp Programming Language](https://docs.microsoft.com/en-us/quantum/?view=qsharp-preview) from [Microsoft Quantum Development Kit](https://docs.microsoft.com/en-us/quantum/?view=qsharp-preview))_**, **_[PyQuil](https://pyquil.readthedocs.io/en/stable/) ([Python](https://www.python.org/) Environment Framework from [Rigetti Computing/Rigetti Forest SDK](https://www.rigetti.com/forest))_**, [**_ProjectQ_**](https://projectq.ch/) **_([Python](https://www.python.org/) Environment Open-Source Framework)_** and **_[TeX](http://tug.org/) ([LaTeX](https://www.latex-project.org/))_**. The project will present some kind of **_Introductory Course of Quantum Physics/Mechanics and Quantum Computing_**, and also, some basic _exercises_ and _tutorials_ about it.
 
 
+## Tutorials
+### QisKit/IBM Q Experience
+* 01. Intro
+* 02. Basics
+* 03. Fundamentals
+
+### Forest SDK from Rigetti Computing/PyQuil
+* 01. Intro
+* 02. Basics
+* 03. Fundamentals
+      * c) [Quantum Entanglement](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement/quantum-entanglement-using-bell-state-in-10-seconds.ipynb)
+
+
 ## Contributors
 > [Rúben André Barreiro](https://github.com/rubenandrebarreiro/)
 
