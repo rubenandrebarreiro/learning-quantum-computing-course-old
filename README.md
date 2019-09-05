@@ -45,7 +45,7 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
 
 ## Tutorials
 
-### IBM Q Experience/QisKit
+### i. IBM Q Experience/QisKit
 #### 00. Intro
 
 #### 01. Basics
@@ -60,7 +60,7 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
     * [_Schrödinger's Cat Experiment (Simple and Equal Experiment)_](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/qiskit/02.%20fundamentals/b.%20schrodinger-cat-experiment/schrodinger-cat-experiment-simple-and-equal-experiment.ipynb)
 * c) [**_Quantum Entanglement_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/qiskit/02.%20fundamentals/c.%20quantum-entanglement)
 
-### Forest SDK from Rigetti Computing/PyQuil
+### ii. Forest SDK from Rigetti Computing/PyQuil
 #### 00. Intro
 
 #### 01. Basics
@@ -70,6 +70,10 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
 * b) [**_Schrödinger's Cat Experiment_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/b.%20schrodinger-cat-experiment)
 * c) [**_Quantum Entanglement_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement)
     * [_Quantum Entanglement using Bell State (in 10 Seconds)_](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement/quantum-entanglement-using-bell-state-in-10-seconds.ipynb)
+
+### iii. ProjectQ (Quantum Framework from ETH Zurich)
+
+### iv. Microsoft Quantum SDK/Q# (Q Sharp)
 
 
 ## Contributors
