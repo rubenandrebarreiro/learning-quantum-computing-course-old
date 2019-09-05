@@ -42,6 +42,12 @@
 ## Description
 A project based in **_Quantum Computing_**. This project was built using **_[IBM Q Experience](https://quantum-computing.ibm.com/)/[QisKit](https://qiskit.org/) ([Jupyter Notebook](https://jupyter.org/)/[Python](https://www.python.org/) Environment Framework from [IBM](https://ibm.com/))_**, **_[PyQuil](https://pyquil.readthedocs.io/en/stable/) ([Python](https://www.python.org/) Environment Framework from [Rigetti Computing/Rigetti Forest SDK](https://www.rigetti.com/forest))_**, [**_ProjectQ_**](https://projectq.ch/) **_([Python](https://www.python.org/) Environment Open-Source Framework from [ETH Zurich](https://ethz.ch/en.html))_**, [**_Q#_**](https://docs.microsoft.com/en-us/quantum/?view=qsharp-preview) **_([Q Sharp Programming Language](https://docs.microsoft.com/en-us/quantum/?view=qsharp-preview) from [Microsoft Quantum SDK](https://docs.microsoft.com/en-us/quantum/?view=qsharp-preview))_** and **_[TeX](http://tug.org/) ([LaTeX](https://www.latex-project.org/))_**. The project will present some kind of **_Introductory Course of Quantum Physics/Mechanics and Quantum Computing_**, and also, some basic _tutorials_, _exercises_ and _papers_ about it.
 
+***
+
+## Course
+You can see the **_Slides_** and **_Presentations_** of the **_Course_**, [**_clicking here_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/course)!
+
+***
 
 ## Tutorials and Exercises
 You can see some **_Tutorials_** and **_Exercises_**, [**_clicking here_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials-and-exercises)!
