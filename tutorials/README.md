@@ -11,7 +11,7 @@
 > #### 01. Basics ⚛️ 💥 ⚙️
 
 > #### 02. Fundamentals ⚛️ 💥 ⚙️
-> * a) [**_Quantum Superposition_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/qiskit/02.%20fundamentals/a.%20quantum-superposition) ⚛️ ↕️
+> * a) [**_Quantum Superposition_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/qiskit/02.%20fundamentals/a.%20quantum-superposition) ⚛️ 🕋
 >     * [_Quantum Superposition (Simple Experiment)_](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/qiskit/02.%20fundamentals/a.%20quantum-superposition/quantum-superposition-simple-experiment.ipynb)
 >     * [_Quantum Superposition (All Possible States of Countinuous Evaluation about My Master's Courses in Fall Semester 2019 Experiment)_](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/qiskit/02.%20fundamentals/a.%20quantum-superposition/quantum-superposition-all-possible-states-of-continuos-evaluation-about-my-master-courses-in-fall-semester-2019-experiment.ipynb)    
 >     * [_Quantum Superposition (Emoji States about My Master Thesis Experiment)_](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/qiskit/02.%20fundamentals/a.%20quantum-superposition/quantum-superposition-emoji-states-about-my-master-thesis-experiment.ipynb)
@@ -28,7 +28,7 @@
 > #### 01. Basics ⚛️ 💥 ⚙️
 
 > #### 02. Fundamentals ⚛️ 💥 ⚙️
-> * a) [**_Quantum Superposition_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/a.%20quantum-superposition) ⚛️ ↕️
+> * a) [**_Quantum Superposition_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/a.%20quantum-superposition) ⚛️ 🕋
 > * b) [**_Schrödinger's Cat Experiment_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/b.%20schrodinger-cat-experiment) 🐱 🕋
 > * c) [**_Quantum Entanglement_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement) ⚛️ 🔗
 >     * [_Quantum Entanglement using Bell State (in 10 Seconds)_](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement/quantum-entanglement-using-bell-state-in-10-seconds.ipynb)
