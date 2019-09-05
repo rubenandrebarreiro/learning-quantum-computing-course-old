@@ -3,7 +3,7 @@
 ![https://raw.githubusercontent.com/rubenandrebarreiro/learning-quantum-computing/master/imgs/JPGs/banner-1.jpg](https://raw.githubusercontent.com/rubenandrebarreiro/learning-quantum-computing/master/imgs/JPGs/banner-1.jpg)
 ###### Learning Quantum Computing - Banner #1
 
-## Tutorials and Exercises
+## Tutorials and Exercises ⚛️ 💥 ⚙️
 
 ### i. IBM Q Experience/QisKit
 > #### 00. Intro
