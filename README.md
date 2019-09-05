@@ -52,7 +52,7 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
 
 #### 02. Fundamentals
 * a) [Quantum Superposition](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/qiskit/02.%20fundamentals/a.%20quantum-superposition)
-* b) [Quantum Entanglement](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/qiskit/02.%20fundamentals/b.%20schrodinger-cat-experiment)
+* b) [Schrödinger's Cat Experiment](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/qiskit/02.%20fundamentals/b.%20schrodinger-cat-experiment)
 * c) [Quantum Entanglement](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/qiskit/02.%20fundamentals/c.%20quantum-entanglement)
 
 ### Forest SDK from Rigetti Computing/PyQuil
@@ -62,7 +62,7 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
 
 #### 02. Fundamentals
 * a) [Quantum Superposition](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/a.%20quantum-superposition)
-* b) [Quantum Entanglement](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/b.%20schrodinger-cat-experiment)
+* b) [Schrödinger's Cat Experiment](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/b.%20schrodinger-cat-experiment)
 * c) [Quantum Entanglement](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement)
     * [Quantum Entanglement using Bell State, in 10 Seconds](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement/quantum-entanglement-using-bell-state-in-10-seconds.ipynb)
 
