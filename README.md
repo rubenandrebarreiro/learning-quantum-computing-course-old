@@ -44,16 +44,23 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
 
 
 ## Tutorials
-### QisKit/IBM Q Experience
-* 01. Intro
-* 02. Basics
-* 03. Fundamentals
+
+### IBM Q Experience/QisKit
+#### 00. Intro
+
+#### 01. Basics
+
+#### 02. Fundamentals
+
 
 ### Forest SDK from Rigetti Computing/PyQuil
-* 01. Intro
-* 02. Basics
-* 03. Fundamentals
-      * c) [Quantum Entanglement](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement/quantum-entanglement-using-bell-state-in-10-seconds.ipynb)
+#### 00. Intro
+
+#### 01. Basics
+
+#### 02. Fundamentals
+* c) [Quantum Entanglement](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement)
+    * [Quantum Entanglement using Bell State, in 10 Seconds](https://github.com/rubenandrebarreiro/learning-quantum-computing/blob/master/tutorials/pyquil/02.%20fundamentals/c.%20quantum-entanglement/quantum-entanglement-using-bell-state-in-10-seconds.ipynb)
 
 
 ## Contributors
