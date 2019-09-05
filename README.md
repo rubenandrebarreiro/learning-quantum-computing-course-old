@@ -44,7 +44,7 @@ A project based in **_Quantum Computing_**. This project was built using **_[IBM
 
 ***
 
-## Course
+## Course (Slides and Presentations)
 You can see the **_Slides_** and **_Presentations_** of the **_Course_**, [**_clicking here_**](https://github.com/rubenandrebarreiro/learning-quantum-computing/tree/master/course)!
 
 ***
